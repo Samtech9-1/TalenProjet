@@ -2,6 +2,7 @@ global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
 global using TalenProjet.Server.Services.ProductService;
+global using TalenProjet.Server.Services.CategoryService;
 global using TalenProjet.Shared;
 using TalenProjet.Server.Data;
 
@@ -18,6 +19,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 
