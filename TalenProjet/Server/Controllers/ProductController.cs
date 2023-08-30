@@ -33,5 +33,12 @@ namespace TalenProjet.Server.Controllers
             var product = await _productService.GetProductAsync(productId);          
             return Ok(product);
         }
+
+        [HttpGet("category/{categoryUrl}")]
+        public async Task<ActionResult<ServiceResponse<Product>>> GetProductByCategory(string categoryUrl)
+        {
+            var product = await _productService.GetProductByCategory(categoryUrl);
+            return Ok(product);
+        }
     }
 }

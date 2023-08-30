@@ -1,5 +1,5 @@
 ﻿@inject IProductService Productservice
-
+@implements IDisposable
 
 <h3>Produc tList</h3>
 @if (Productservice.Products == null || Productservice.Products.Count == 0)
