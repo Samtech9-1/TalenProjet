@@ -4,6 +4,7 @@
     {
         private Product? product = null;
         private string message = string.Empty;
+        public int currentTypeId = 1;
 
         [Parameter]
         public int Id { get; set; }
@@ -19,7 +20,16 @@
             else
             {
                 product = res.Data;
+                if (product.Variants.Count > 0) 
+                {
+                    currentTypeId = product.Variants[0].ProductTypeId;
+                }
             }
+        }
+        private ProductVariant GetSelectedVAriant()
+        {
+            var variant = product.Variants.FirstOrDefault(v => v.ProductTypeId == currentTypeId);
+            return variant;
         }
     }
 }

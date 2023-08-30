@@ -19,7 +19,7 @@ namespace TalenProjet.Server.Services.ProductService
         {
             var response = new ServiceResponse<List<Product>>
             {
-                Data = await _contect.Products.ToListAsync(),
+                Data = await _contect.Products.Include(p => p.Variants).ToListAsync(),
             };
             return response;
         }
@@ -27,7 +27,10 @@ namespace TalenProjet.Server.Services.ProductService
         public async Task<ServiceResponse<Product>> GetProductAsync(int productId)
         {
             var resposne = new ServiceResponse<Product>();
-            var product = await _contect.Products.FindAsync(productId);
+            var product = await _contect.Products
+                                        .Include(p => p.Variants)
+                                        .ThenInclude(v => v.ProductType)
+                                        .FirstOrDefaultAsync(p => p.Id == productId);
             if (product == null)
             {
                 resposne.Message = "sorry, the prouct is not found !";
@@ -46,6 +49,7 @@ namespace TalenProjet.Server.Services.ProductService
             {
                 Data = await _contect.Products
                        .Where(x => x.Category.Url.ToLower().Equals(categoryUrl.ToLower()))
+                        .Include(p => p.Variants)
                        .ToListAsync()
             };
             return response;
