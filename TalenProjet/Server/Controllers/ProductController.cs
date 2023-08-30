@@ -1,6 +1,7 @@
 ﻿
 
 using TalenProjet.Server.Data;
+using TalenProjet.Shared;
 
 namespace TalenProjet.Server.Controllers
 {
@@ -24,6 +25,13 @@ namespace TalenProjet.Server.Controllers
                 Data = products.Data
             };
             return Ok(response);
+        }
+
+        [HttpGet("{productId}")]
+        public async Task<ActionResult<ServiceResponse<Product>>> GetProduct(int productId )
+        {
+            var product = await _productService.GetProductAsync(productId);          
+            return Ok(product);
         }
     }
 }

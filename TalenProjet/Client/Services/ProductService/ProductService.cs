@@ -18,5 +18,11 @@
                 Products = res.Data;
             }
         }
+
+        public async Task<ServiceResponse<Product>> GetProduct(int productid)
+        {
+            var result = await _http.GetFromJsonAsync<ServiceResponse<Product>>($"api/product/{productid}");
+            return result;
+        }
     }
 }

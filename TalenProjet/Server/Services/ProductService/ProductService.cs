@@ -7,20 +7,35 @@ namespace TalenProjet.Server.Services.ProductService
 {
     public class ProductService : IProductService
     {
-        private readonly DataContext _dataContext;
+        private readonly DataContext _contect;
 
-        public ProductService(DataContext dataContext )
+        public ProductService(DataContext context )
         {
-            _dataContext = dataContext;
+            _contect = context;
         }
 
         public async Task<ServiceResponse<List<Product>>> GetProductsListAsync()
         {            
             var response = new ServiceResponse<List<Product>>
             {
-                Data = await _dataContext.Products.ToListAsync(),
+                Data = await _contect.Products.ToListAsync(),
             };
             return response;
+        }
+
+        public async Task<ServiceResponse<Product>> GetProductAsync(int productId)
+        {
+            var resposne = new ServiceResponse<Product>();
+            var product = await _contect.Products.FindAsync(productId);
+            if (product == null)
+            {
+                resposne.Message = "sorry, the prouct is not found !";
+                resposne.Success = false;
+            }else
+            {
+                resposne.Data = product;
+            }
+            return resposne;
         }
     }
 }

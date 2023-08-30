@@ -1,6 +1,8 @@
 global using TalenProjet.Shared;
 global using TalenProjet.Client.Services.ProductService;
 global using  System.Net.Http.Json;
+global using Microsoft.AspNetCore.Components;
+
 using TalenProjet.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
