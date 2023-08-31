@@ -1,5 +1,5 @@
 ﻿@page "/register"
-
+@inject IAuthService AuthService
 <PageTitle>Utilisateur</PageTitle>
 
 <h3>Créer un compte</h3>
@@ -20,15 +20,24 @@
         <InputText id="confirmPassword" @bind-Value="user.ConfirmPassword" class="form-control" type="password" />
         <ValidationMessage For="@(() => user.ConfirmPassword)" />
     </div>
-    <button type="submit" class="btn btn-primary">Créer</button>
-    <ValidationSummary/>
+    <button type="submit" class="btn btn-primary mt-3">Créer</button>
+    <div class="@messageCssClass">
+        <span>@message</span>
+    </div>
+  
 </EditForm>
 
 @code {
     UserRegister user = new UserRegister();
-
-    void HandleRegistration()
+    string message = string.Empty;
+    string messageCssClass = string.Empty;
+    async Task HandleRegistration()
     {
-        Console.WriteLine($" Crééer un utilisateur avec un le mail {user.Email}");
-    }
+        var result = await AuthService.Register(user);
+        message = result.Message;
+        if (result.Success)
+            messageCssClass = "text-success";
+        else
+            messageCssClass = "text-danger";
+    }    
 }

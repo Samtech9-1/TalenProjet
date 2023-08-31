@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿
 
 namespace TalenProjet.Server.Controllers
 {
@@ -24,6 +23,18 @@ namespace TalenProjet.Server.Controllers
                 },
                 request.Password);
 
+            if (!response.Success)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<ServiceResponse<string>>> Login(UserLogIn request)
+        {
+            var response = await _authService.Login(request.Email, request.Password);
             if (!response.Success)
             {
                 return BadRequest(response);
