@@ -7,5 +7,7 @@ namespace TalenProjet.Client.Services.AuthService
         Task<ServiceResponse<int>> Register(UserRegister request);
 
         Task<ServiceResponse<string>> LogIn(UserLogIn request);
+
+        Task<ServiceResponse<bool>> ChangePassword(UserChangePasseword request);
     }
 }
