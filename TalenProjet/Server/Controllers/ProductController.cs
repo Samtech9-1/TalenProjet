@@ -54,5 +54,12 @@ namespace TalenProjet.Server.Controllers
             var product = await _productService.GetProductsSearchSuggestions(searchText);
             return Ok(product);
         }
+
+        [HttpGet("featured")]
+        public async Task<ActionResult<ServiceResponse<Product>>> GetFeaturedProducts()
+        {
+            var product = await _productService.GetFeaturedProducts();
+            return Ok(product);
+        }
     }
 }

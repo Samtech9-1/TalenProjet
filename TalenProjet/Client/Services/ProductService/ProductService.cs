@@ -18,7 +18,7 @@ namespace TalenProjet.Client.Services.ProductService
         public async Task GetProducts(string categoryUrl)
         { 
             var res = categoryUrl == null ?
-                await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product") :
+                await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product/featured") :
                 await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>($"api/product/category/{categoryUrl}");
             if (res != null && res.Data != null)
             {
