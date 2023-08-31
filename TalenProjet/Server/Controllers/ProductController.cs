@@ -41,10 +41,10 @@ namespace TalenProjet.Server.Controllers
             return Ok(product);
         }
 
-        [HttpGet("search/{searchText}")]
-        public async Task<ActionResult<ServiceResponse<Product>>> GetSearchProducts(string searchText)
+        [HttpGet("search/{searchText}/{page}")]
+        public async Task<ActionResult<ServiceResponse<ProductSearcResultDTO>>> GetSearchProducts(string searchText, int page = 1)
         {
-            var product = await _productService.SearchProducts(searchText);
+            var product = await _productService.SearchProducts(searchText, page);
             return Ok(product);
         }
 

@@ -31,4 +31,12 @@ else
             </li>
         }
     </ul>
+
+    for (var i = 1; i <= Productservice.PageCount; i++)
+    {
+        <a class="btn
+                 @(i == Productservice.CurrentPage ? "btn-info" : "btn-outline-info")
+                 page-selection"
+           href="/search/@Productservice.LastSearchText/@i">@i</a>
+    }
 }

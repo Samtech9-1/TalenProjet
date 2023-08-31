@@ -14,8 +14,11 @@ namespace TalenProjet.Client.Services.ProductService
         }
         public List<Product> Products { get; set; } = new List<Product>();
         public string Message { get; set; } = "Chargement des produits...";
+        public int CurrentPage { get; set; } = 1;
+        public int PageCount { get; set; } = 0;
+        public string LastSearchText { get; set; } = string.Empty;
 
-        public async Task GetProducts(string categoryUrl)
+        public async Task GetProducts(string? categoryUrl)
         { 
             var res = categoryUrl == null ?
                 await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>("api/product/featured") :
@@ -24,6 +27,14 @@ namespace TalenProjet.Client.Services.ProductService
             {
                 Products = res.Data;
             }
+            CurrentPage = 1;
+            PageCount = 0;
+
+            if (Products.Count == 0)
+            {
+                Message = "il n'y a pas de produit !";
+            }
+
             ProductChanged.Invoke();
         }
 
@@ -33,12 +44,16 @@ namespace TalenProjet.Client.Services.ProductService
             return result;
         }
 
-        public async Task SearchProduct(string searchText)
+        public async Task SearchProduct(string searchText, int page)
         {
-            var result = await _http.GetFromJsonAsync<ServiceResponse<List<Product>>>($"api/product/search/{searchText}");
+            LastSearchText = searchText;
+            var result = await _http.GetFromJsonAsync<ServiceResponse<ProductSearcResultDTO>>($"api/product/search/{searchText}/{page}");
             if (result != null && result.Data != null)
             {
-                Products = result.Data;
+                Products = result.Data.Products;
+                CurrentPage = result.Data.CurrentPage;
+                PageCount = result.Data.Pages;
+                    
             }
             if (Products.Count == 0) 
             {

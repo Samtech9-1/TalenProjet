@@ -7,11 +7,14 @@
         [Parameter]
         public string? SearchText { get; set; } = null;
 
+        [Parameter]
+        public int Page { get; set; } = 1;
+
         protected override async Task OnParametersSetAsync()
         {
             if (SearchText != null) 
             { 
-                await ProductService.SearchProduct(SearchText);
+                await ProductService.SearchProduct(SearchText, Page);
             }
             else
             {
