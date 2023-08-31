@@ -1,4 +1,6 @@
-﻿namespace TalenProjet.Client.Services.AuthService
+﻿using TalenProjet.Shared;
+
+namespace TalenProjet.Client.Services.AuthService
 {
     public class AuthService : IAuthService
     {
@@ -13,6 +15,13 @@
         {
             var result = await _http.PostAsJsonAsync("api/auth/register", request);
             return await result.Content.ReadFromJsonAsync<ServiceResponse<int>>();
+        }
+
+
+        public async Task<ServiceResponse<string>> LogIn(UserLogIn request)
+        {
+            var result = await _http.PostAsJsonAsync("api/auth/login", request);
+            return await result.Content.ReadFromJsonAsync<ServiceResponse<string>>();
         }
     }
 }
