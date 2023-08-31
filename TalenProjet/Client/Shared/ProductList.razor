@@ -5,7 +5,7 @@
 @if (Productservice.Products == null || Productservice.Products.Count == 0)
 {
     <span>
-        Loading products ...
+        @Productservice.Message
     </span>
 }
 else

@@ -54,5 +54,54 @@ namespace TalenProjet.Server.Services.ProductService
             };
             return response;
         }
+
+        public async Task<ServiceResponse<List<Product>>> SearchProducts(string searchText)
+        {
+            var response = new ServiceResponse<List<Product>>
+            {
+                Data = await FindPrductsBySearctet(searchText)
+
+            };
+            return response;
+        }
+
+        private async Task<List<Product>> FindPrductsBySearctet(string searchText)
+        {
+            return await _contect.Products
+                                 .Where(p => p.Title.ToLower().Contains(searchText.ToLower())
+                                 ||
+                                 p.Description.ToLower().Contains(searchText.ToLower()))
+                                 .Include(p => p.Variants)
+                                 .ToListAsync();
+        }
+
+        public async Task<ServiceResponse<List<string>>> GetProductsSearchSuggestions(string searchText)
+        {
+            var products = await FindPrductsBySearctet(searchText);
+            List<string> result = new List<string>();
+            foreach (var product in products) 
+            { 
+                if (product.Title.Contains(searchText, StringComparison.OrdinalIgnoreCase))
+                {
+                    result.Add(product.Title);
+                }
+                if (product.Description != null)
+                {
+                    var puntuation = product.Description.Where(char.IsPunctuation)
+                                     .Distinct().ToArray();
+                    var words = product.Description.Split()
+                                .Select(s => s.Trim(puntuation));
+                    foreach (var word in words)
+                    {
+                        if (word.Contains(searchText, StringComparison.OrdinalIgnoreCase) && !result.Contains(word))
+                        {
+                            result.Add(word);
+                        }
+                    }
+                }
+            }
+            return new ServiceResponse<List<string>> { Data = result };
+
+        }
     }
 }
