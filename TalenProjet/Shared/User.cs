@@ -17,5 +17,7 @@ namespace TalenProjet.Shared
         public byte[] PasswordSalt { get; set; }
 
         public DateTime DateCreated { get; set; } = DateTime.Now;
+
+        public string Role { get; set; } = "Client";
     }
 }
