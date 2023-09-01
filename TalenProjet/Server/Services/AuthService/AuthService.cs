@@ -57,12 +57,12 @@ namespace TalenProjet.Server.Services.AuthService
             if (user == null)
             {
                 response.Success = false;
-                response.Message = "User not found.";
+                response.Message = "l(itisateur n'existe pas.";
             }
             else if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
             {
                 response.Success = false;
-                response.Message = "Wrong password.";
+                response.Message = "muvais MDP.";
             }
             else
             {
