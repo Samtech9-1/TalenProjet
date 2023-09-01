@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TalenProjet.Server.Data;
 
@@ -11,9 +12,11 @@ using TalenProjet.Server.Data;
 namespace TalenProjet.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230901054224_UpdateCat")]
+    partial class UpdateCat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,7 +58,7 @@ namespace TalenProjet.Server.Migrations
                             Deleted = false,
                             Name = "Books",
                             Url = "books",
-                            Visible = true
+                            Visible = false
                         },
                         new
                         {
@@ -63,7 +66,7 @@ namespace TalenProjet.Server.Migrations
                             Deleted = false,
                             Name = "Movies",
                             Url = "movies",
-                            Visible = true
+                            Visible = false
                         },
                         new
                         {
@@ -71,7 +74,7 @@ namespace TalenProjet.Server.Migrations
                             Deleted = false,
                             Name = "Video Games",
                             Url = "video-games",
-                            Visible = true
+                            Visible = false
                         });
                 });
 
