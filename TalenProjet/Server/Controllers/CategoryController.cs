@@ -28,17 +28,25 @@ namespace TalenProjet.Server.Controllers
             return Ok(result);
         }
 
-        [HttpPost("admin"), Authorize(Roles = "Admin")]
-        public async Task<ActionResult<ServiceResponse<List<Category>>>> DeleteACatgories(int id)
+        [HttpDelete("admin/{id}"), Authorize(Roles = "Admin")]
+        public async Task<ActionResult<ServiceResponse<List<Category>>>> DeleteCatgories(int id)
         {
             var result = await _categoryService.DeleteCategories(id);
             return Ok(result);
         }
 
-        [HttpPut("admin"), Authorize(Roles = "Admin")]
-        public async Task<ActionResult<ServiceResponse<List<Category>>>> AddCatgories(Category categorie)
+        [HttpPost("admin"), Authorize(Roles = "Admin")]
+        public async Task<ActionResult<ServiceResponse<List<Category>>>> AddCategories(Category category)
         {
-            var result = await _categoryService.AddCategories(categorie);
+            var result = await _categoryService.AddCategories(category);
+            return Ok(result);
+        }
+
+
+        [HttpPut("admin"), Authorize(Roles = "Admin")]
+        public async Task<ActionResult<ServiceResponse<List<Category>>>> UpdateCatgories(Category categorie)
+        {
+            var result = await _categoryService.UpdateCategories(categorie);
             return Ok(result);
         }
     }
